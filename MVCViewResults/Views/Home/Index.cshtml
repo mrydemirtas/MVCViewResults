@@ -1,0 +1,55 @@
+﻿
+@{
+    Layout = null;
+}
+
+@using MVCViewResults.Models
+@model IndexVM
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Index</title>
+
+
+</head>
+<body>
+    <div>
+
+        @*<nav>
+                @foreach (var item in Model.Menus)
+                    {
+                        <a href="@item.Url">@item.Name</a>
+                    }
+            </nav>*@
+
+        @* aşağıdaki yeni hali partialdan çekilecek. *@
+
+          @*<ul>
+
+            @foreach (var item in Model.Categories)
+            {
+                <li>@item.Name</li>
+            }
+        </ul>*@
+
+
+        @{
+            Html.RenderPartial("Part/_menuPart", Model.Menus);
+        }
+
+
+        @{
+            Html.RenderPartial("Part/_categoryPart", Model.Categories);
+        }
+
+        <h1>@Model.Content.Title</h1>
+        <p>@Model.Content.Content</p>
+
+
+    </div>
+</body>
+
+</html>

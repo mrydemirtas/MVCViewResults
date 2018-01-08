@@ -1,0 +1,86 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Index</title>
+    <link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+</head>
+<body>
+    <div>
+
+        <button class="btn btn-default">Like</button>
+        <script src="~/Scripts/jquery-1.9.1.js"></script>
+        <script src="~/Scripts/bootstrap.js"></script>
+
+
+
+        <textarea name="message"></textarea>
+        <button id="btn">Gönder</button>
+
+        <div id="messageContainer">
+
+        </div>
+
+        <script>
+
+            var isLike = false;
+
+            $("button").click(function () {
+                //JsonResult bir kaynaktan veri çekmek için kullanılır.
+                isLike = !isLike;
+                $.get("/JsonResultt/Like?isLike=" + isLike, function (response) {
+                    if (response == true) {
+                        $("button").removeClass("btn-default").addClass("btn-primary");
+                    }
+                    else {
+                        $("button").addClass("btn-default").removeClass("btn-primary");
+                    }
+                })
+
+                var data = new Object();
+                data.Name = "A";
+
+                $.post("/JsonResultt/SendMessage", data, function () {
+
+                });
+            })
+
+            $("#btn").click(function () {
+                var val = $("textarea").val();
+
+                $.ajax({
+                    url: "/JsonResultt/SendMessage",
+                    type: "post",
+                    data: val,
+                    success: function (ress) {
+                        alert(ress);
+                        $("#messageContainer").append("<div>" + val + "</div>");
+                    },
+                    error: function (error) {
+                        alert(error);
+                    }
+                })
+
+                //$.post("/JsonResultt/SendMessage?message=" + val, function (res) {
+                //    console.log(res);
+                //    alert(res);
+
+                //    $("#messageContainer").append("<div>" + val + "</div>");
+                //})
+            })
+
+
+
+
+        </script>
+
+
+    </div>
+</body>
+</html>
